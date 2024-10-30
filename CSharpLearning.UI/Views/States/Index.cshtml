@@ -1,4 +1,4 @@
-﻿@model IEnumerable<State>
+﻿@model IEnumerable<StateViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,10 +16,10 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.StateName)
             </th>
             <th>
-               Country Name
+                @Html.DisplayNameFor(model => model.CountryName)
             </th>
             <th></th>
         </tr>
@@ -31,10 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.StateName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Country.Name)
+                @Html.DisplayFor(modelItem => item.CountryName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item.Id}) |

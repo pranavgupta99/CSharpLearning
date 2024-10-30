@@ -1,5 +1,6 @@
 ﻿using CSharpLearning.Entities;
 using CSharpLearning.Repositories.Interfaces;
+using CSharpLearning.UI.ViewModels.CountryViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSharpLearning.UI.Controllers
@@ -15,19 +16,28 @@ namespace CSharpLearning.UI.Controllers
 
         public IActionResult Index()
         {
+            List<CountryViewModels> vm = new List<CountryViewModels>();
             var countries = _countryRepo.GetAll();
-            return View(countries);
+            foreach(var country in countries)
+            {
+                vm.Add(new CountryViewModels { Id = country.Id, Name = country.Name});
+            }
+            return View(vm);
         }
         [HttpGet]
         public IActionResult Create()
         {
-            Country country = new Country();
+            CreateCountryViewModel country = new CreateCountryViewModel();
             return View(country);
         }
 
         [HttpPost]
-        public IActionResult Create(Country country)
+        public IActionResult Create(CreateCountryViewModel vm)
         {
+            var country = new Country
+            {
+                Name = vm.Name,
+            };
             _countryRepo.Save(country);
             return RedirectToAction("Index");
         }
@@ -36,12 +46,23 @@ namespace CSharpLearning.UI.Controllers
         public IActionResult Edit(int id)
         {   
             var country = _countryRepo.GetById(id);
-            return View(country);
+            CountryViewModels vm = new CountryViewModels
+            {
+                Id = country.Id,
+                Name = country.Name,
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Edit(Country country)
+        public IActionResult Edit(CountryViewModels vm)
         {
+            var country = new Country
+            {
+                Id= vm.Id,
+                Name = vm.Name,
+            };
             _countryRepo.Edit(country);
             return RedirectToAction("Index");
         }

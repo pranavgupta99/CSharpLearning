@@ -1,5 +1,6 @@
 ﻿using CSharpLearning.Entities;
 using CSharpLearning.Repositories.Interfaces;
+using CSharpLearning.UI.ViewModels.StateViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -21,7 +22,12 @@ namespace CSharpLearning.UI.Controllers
         public IActionResult Index()
         {
             var states = _stateRepo.GetAll();
-            return View(states);
+            var vm = new List<StateViewModel>();
+            foreach (var state in states)
+            {
+                vm.Add(new StateViewModel { Id = state.Id, StateName = state.Name, CountryName = state.Country.Name });
+            }
+            return View(vm);
         }
         [HttpGet]
         public IActionResult Create()
@@ -32,25 +38,42 @@ namespace CSharpLearning.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(State states)
+        public IActionResult Create(CreateStateViewModel vm)
         {
-            _stateRepo.Save(states);
+            var state = new State
+            {
+                Name = vm.StateName,
+                CountryId = vm.CountryId,
+            };
+            _stateRepo.Save(state);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var states = _stateRepo.GetByID(id);
-            return View(states);
+            var state = _stateRepo.GetByID(id);
+            var vm = new EditStateViewModel
+            {
+                Id = state.Id,
+                StateName = state.Name,
+                CountryId = state.CountryId,
+            };
+            var countries = _countryRepo.GetAll();
+            ViewBag.CountryList = new SelectList(countries, "Id", "Name");
+            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Edit(State states)
+        public IActionResult Edit(EditStateViewModel vm)
         {
-            _stateRepo.Edit(states);
-            var countries = _countryRepo.GetAll();
-            ViewBag.CountryList = new SelectList(countries, "Id", "Name");
+            var state = new State
+            {
+                Id = vm.Id,
+                Name = vm.StateName,
+                CountryId = vm.CountryId,
+            };
+            _stateRepo.Edit(state);
             return RedirectToAction("Index");
         }
 
