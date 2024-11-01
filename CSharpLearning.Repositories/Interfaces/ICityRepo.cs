@@ -9,10 +9,10 @@ namespace CSharpLearning.Repositories.Interfaces
 {
     public interface ICityRepo
     {
-        IEnumerable<City> GetAll();
-        City GetByID(int id);
-        void Edit(City city);
-        void Save(City city);
-        void RemoveData(City city);
+        Task<IEnumerable<City>> GetAll();
+        Task<City> GetByID(int id);
+        Task Edit(City city);
+        Task Save(City city);
+        Task RemoveData(City city);
     }
 }

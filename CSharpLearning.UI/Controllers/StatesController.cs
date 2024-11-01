@@ -19,9 +19,9 @@ namespace CSharpLearning.UI.Controllers
             _countryRepo = countryRepo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var states = _stateRepo.GetAll();
+            var states = await _stateRepo.GetAll();
             var vm = new List<StateViewModel>();
             foreach (var state in states)
             {
@@ -30,42 +30,42 @@ namespace CSharpLearning.UI.Controllers
             return View(vm);
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var countries = _countryRepo.GetAll();
+            var countries = await _countryRepo.GetAll();
             ViewBag.CountryList = new SelectList(countries, "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(CreateStateViewModel vm)
+        public async Task<IActionResult> Create(CreateStateViewModel vm)
         {
             var state = new State
             {
                 Name = vm.StateName,
                 CountryId = vm.CountryId,
             };
-            _stateRepo.Save(state);
+            await _stateRepo.Save(state);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var state = _stateRepo.GetByID(id);
+            var state = await _stateRepo.GetByID(id);
             var vm = new EditStateViewModel
             {
                 Id = state.Id,
                 StateName = state.Name,
                 CountryId = state.CountryId,
             };
-            var countries = _countryRepo.GetAll();
+            var countries = await _countryRepo.GetAll();
             ViewBag.CountryList = new SelectList(countries, "Id", "Name");
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Edit(EditStateViewModel vm)
+        public async Task <IActionResult> Edit(EditStateViewModel vm)
         {
             var state = new State
             {
@@ -73,15 +73,15 @@ namespace CSharpLearning.UI.Controllers
                 Name = vm.StateName,
                 CountryId = vm.CountryId,
             };
-            _stateRepo.Edit(state);
+             await _stateRepo.Edit(state);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var states = _stateRepo.GetByID(id);
-            _stateRepo.RemoveData(states);
+            var states = await _stateRepo.GetByID(id);
+            await _stateRepo.RemoveData(states);
             return RedirectToAction("Index");
         }
     }

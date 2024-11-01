@@ -9,10 +9,10 @@ namespace CSharpLearning.Repositories.Interfaces
 {
     public interface ICountryRepo
     {
-        IEnumerable<Country> GetAll();
-        Country GetById(int id);
-        void Save(Country country);
-        void Edit(Country country);
-        void RemoveData(Country country);
+        Task<IEnumerable<Country>> GetAll();
+        Task<Country> GetById(int id);
+        Task Save(Country country);
+        Task Edit(Country country);
+        Task RemoveData(Country country);
     }
 }

@@ -9,10 +9,10 @@ namespace CSharpLearning.Repositories.Interfaces
 {
     public interface IStateRepo
     {
-        IEnumerable<State> GetAll();
-        State GetByID(int id);
-        void Save(State state);
-        void Edit(State state);
-        void RemoveData(State state);
+        Task<IEnumerable<State>> GetAll();
+        Task<State> GetByID(int id);
+        Task Save(State state);
+        Task Edit(State state);
+        Task RemoveData(State state);
     }
 }

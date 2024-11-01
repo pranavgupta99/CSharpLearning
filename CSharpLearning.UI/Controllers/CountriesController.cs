@@ -14,10 +14,10 @@ namespace CSharpLearning.UI.Controllers
             _countryRepo = countryRepo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<CountryViewModels> vm = new List<CountryViewModels>();
-            var countries = _countryRepo.GetAll();
+            var countries =  await _countryRepo.GetAll();
             foreach(var country in countries)
             {
                 vm.Add(new CountryViewModels { Id = country.Id, Name = country.Name});
@@ -32,7 +32,7 @@ namespace CSharpLearning.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCountryViewModel vm)
+        public async Task<IActionResult> Create(CreateCountryViewModel vm)
         {
             var country = new Country
             {
@@ -43,9 +43,9 @@ namespace CSharpLearning.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {   
-            var country = _countryRepo.GetById(id);
+            var country = await _countryRepo.GetById(id);
             CountryViewModels vm = new CountryViewModels
             {
                 Id = country.Id,
@@ -56,22 +56,22 @@ namespace CSharpLearning.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(CountryViewModels vm)
+        public async Task<IActionResult> Edit(CountryViewModels vm)
         {
             var country = new Country
             {
                 Id= vm.Id,
                 Name = vm.Name,
             };
-            _countryRepo.Edit(country);
+            await _countryRepo.Edit(country);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var country = _countryRepo.GetById(id);
-            _countryRepo.RemoveData(country);
+            var country = await _countryRepo.GetById(id);
+            await _countryRepo.RemoveData(country);
             return RedirectToAction("Index");
         }
     }

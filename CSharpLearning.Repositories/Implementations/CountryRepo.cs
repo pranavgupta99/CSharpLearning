@@ -1,5 +1,6 @@
 ﻿using CSharpLearning.Entities;
 using CSharpLearning.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,34 +18,34 @@ namespace CSharpLearning.Repositories.Implementations
             _context = context;
         }
 
-        public void Edit(Country country)
+        public async Task Edit(Country country)
         {
             _context.Countries.Update(country);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Country> GetAll()
+        public async Task<IEnumerable<Country>> GetAll()
         {
-            var countries = _context.Countries.ToList();
+            var countries = await _context.Countries.ToListAsync();
             return countries;
         }
 
-        public Country GetById(int id)
+        public async Task<Country> GetById(int id)
         {
-            var country = _context.Countries.Find(id);
+            var country = await _context.Countries.FindAsync(id);
             return country;
         }
 
-        public void RemoveData(Country country)
+        public async Task RemoveData(Country country)
         {
             _context.Countries.Remove(country);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Save(Country country)
+        public async Task Save(Country country)
         {
-            _context.Countries.Add(country);
-            _context.SaveChanges();
+            await _context.Countries.AddAsync(country);
+            await _context.SaveChangesAsync();
         }
     }
 }

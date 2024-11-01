@@ -16,34 +16,34 @@ namespace CSharpLearning.Repositories.Implementations
         {
             _context = context;
         }
-        public void Edit(State state)
+        public async Task Edit(State state)
         {
             _context.States.Update(state);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<State> GetAll()
+        public async Task<IEnumerable<State>> GetAll()
         {
-            var states = _context.States.Include(x=>x.Country).ToList();
+            var states = await _context.States.Include(x=>x.Country).ToListAsync();
             return states;
         }
 
-        public State GetByID(int id)
+        public async Task<State> GetByID(int id)
         {
-            var state = _context.States.Find(id);
+            var state = await _context.States.FindAsync(id);
             return state;
         }
 
-        public void RemoveData(State state)
+        public async Task RemoveData(State state)
         {
             _context.States.Remove(state);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Save(State state)
+        public async Task Save(State state)
         {
-            _context.States.Add(state);
-            _context.SaveChanges();
+            await _context.States.AddAsync(state);
+            await _context.SaveChangesAsync();
         }
     }
 }
