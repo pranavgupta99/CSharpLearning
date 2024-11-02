@@ -16,6 +16,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddScoped<ICountryRepo, CountryRepo>();
 builder.Services.AddScoped<IStateRepo, StateRepo>();
 builder.Services.AddScoped<ICityRepo, CityRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+});
 // ICityRepo cityRepo = new CityRepo(); 
 // CitiREpo ka object bana kr ICityREpo me daal deta hai
 
@@ -33,6 +40,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

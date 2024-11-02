@@ -16,13 +16,17 @@ namespace CSharpLearning.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<CountryViewModels> vm = new List<CountryViewModels>();
-            var countries =  await _countryRepo.GetAll();
-            foreach(var country in countries)
+            if (HttpContext.Session.GetInt32("userId") != null)
             {
-                vm.Add(new CountryViewModels { Id = country.Id, Name = country.Name});
+                List<CountryViewModels> vm = new List<CountryViewModels>();
+                var countries = await _countryRepo.GetAll();
+                foreach (var country in countries)
+                {
+                    vm.Add(new CountryViewModels { Id = country.Id, Name = country.Name });
+                }
+                return View(vm);
             }
-            return View(vm);
+            return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
         public IActionResult Create()
