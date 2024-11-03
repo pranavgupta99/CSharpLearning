@@ -5,11 +5,17 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpLearning.Web", "CSharpLearning.Web\CSharpLearning.Web.csproj", "{9A4B297A-65E4-4DF9-9AB3-FFE12822ED93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpLearning.Entities", "CSharpLearning.Entities\CSharpLearning.Entities.csproj", "{AC6D6E13-573D-4FF4-BA4C-F677B4F76817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpLearning.Entities", "CSharpLearning.Entities\CSharpLearning.Entities.csproj", "{AC6D6E13-573D-4FF4-BA4C-F677B4F76817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpLearning.Repositories", "CSharpLearning.Repositories\CSharpLearning.Repositories.csproj", "{1A342388-C427-4D9E-AD4E-904EEAEC24A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpLearning.Repositories", "CSharpLearning.Repositories\CSharpLearning.Repositories.csproj", "{1A342388-C427-4D9E-AD4E-904EEAEC24A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpLearning.UI", "CSharpLearning.UI\CSharpLearning.UI.csproj", "{3E798901-4963-4D9D-BF66-2F1896268274}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpLearning.UI", "CSharpLearning.UI\CSharpLearning.UI.csproj", "{3E798901-4963-4D9D-BF66-2F1896268274}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertBooking.Entities", "ConcertBooking.Entities\ConcertBooking.Entities.csproj", "{B4D00194-2E8A-4C54-9F85-53F7930EAC84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertBooking.Repositories", "ConcertBooking.Repositories\ConcertBooking.Repositories.csproj", "{0EAC7E6C-A162-4EFC-9B5B-F91D591CBA31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertBooking.WebHost", "ConcertBooking.WebHost\ConcertBooking.WebHost.csproj", "{D49F7260-3322-4210-BE28-12F6DEFFC4EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{3E798901-4963-4D9D-BF66-2F1896268274}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E798901-4963-4D9D-BF66-2F1896268274}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E798901-4963-4D9D-BF66-2F1896268274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4D00194-2E8A-4C54-9F85-53F7930EAC84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4D00194-2E8A-4C54-9F85-53F7930EAC84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4D00194-2E8A-4C54-9F85-53F7930EAC84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4D00194-2E8A-4C54-9F85-53F7930EAC84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EAC7E6C-A162-4EFC-9B5B-F91D591CBA31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EAC7E6C-A162-4EFC-9B5B-F91D591CBA31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EAC7E6C-A162-4EFC-9B5B-F91D591CBA31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EAC7E6C-A162-4EFC-9B5B-F91D591CBA31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49F7260-3322-4210-BE28-12F6DEFFC4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49F7260-3322-4210-BE28-12F6DEFFC4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49F7260-3322-4210-BE28-12F6DEFFC4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49F7260-3322-4210-BE28-12F6DEFFC4EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
