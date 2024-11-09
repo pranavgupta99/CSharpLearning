@@ -13,6 +13,8 @@ using System.Threading.Tasks;
             //SignInManager - CHeck user Signin, User signin
             //UserManager - Store userdata in database , get user information , add role to user 
             //IdentityRole: Id, Name
+            //Claim: peice of information abt user
+            //ClaimsIdentity = List<Claims>
 
 
 namespace ConcertBooking.Entities

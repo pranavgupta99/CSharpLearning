@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ConcertBooking.Repositories.Interfaces
 {
-    public interface ITicketRepo
+    public interface IBookingRepo
     {
-        Task<IEnumerable<int>> GetBookedTicket(int concertId);
-        Task<IEnumerable<Booking>> GetBookings(string userId);
+        Task AddBooking(Booking booking);
+        Task<IEnumerable<Booking>> GetAll(int ConcertId);
     }
 }

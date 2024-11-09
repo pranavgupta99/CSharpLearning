@@ -34,6 +34,7 @@ builder.Services.AddScoped<IConcertRepo, ConcertRepo>();
 builder.Services.AddScoped<IUtilityRepo, UtilitiyRepo>();
 builder.Services.AddScoped<ITicketRepo, TicketRepo>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IBookingRepo, BookingRepo>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddRazorPages();

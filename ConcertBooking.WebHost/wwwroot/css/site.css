@@ -24,6 +24,26 @@ body {
     color: black
 }
 
-    .colorBlack h2 {
-        color: White
+.colorBlack h2 {
+    color: White
+}
+
+@media print {
+    body * {
+        visibility: hidden
     }
+
+    .print-section, .print-section * {
+        visibility: visible
+    }
+
+    .card-footer {
+        display: none;
+    }
+
+    .print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
