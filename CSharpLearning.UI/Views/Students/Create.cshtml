@@ -1,0 +1,39 @@
+﻿@model CSharpLearning.UI.ViewModels.StudentViewModels.CreateStudentViewModel
+
+<h4>Create New Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudentName" class="control-label"></label>
+                <input asp-for="StudentName" class="form-control" />
+                <span asp-validation-for="StudentName" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <label asp-for="SkillsList" class="control-label">Student Skills</label>
+            @for(int i = 0;i< Model.SkillsList.Count();i++)
+            {
+                <div class="col-md-6">
+                <input type="hidden" asp-for="@Model.SkillsList[i].SkillId" />
+                <input asp-for="@Model.SkillsList[i].IsChecked" />
+                @Model.SkillsList[i].SkillName
+                </div>
+                @if(i+1 %2==0)
+                {
+                       @:</div><div class="row"> 
+                }
+            }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

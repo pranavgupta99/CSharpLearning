@@ -23,6 +23,12 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="cities" asp-action="index">City</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="skills" asp-action="index">Skill</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="students" asp-action="index">Students</a>
+                </li>
             </ul>
             @if(ContextAccessor.HttpContext.Session.GetInt32("userId") != null)
             {

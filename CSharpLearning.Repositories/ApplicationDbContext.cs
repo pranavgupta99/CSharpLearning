@@ -18,5 +18,14 @@ namespace CSharpLearning.Repositories
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StudentSkills>()
+                .HasKey(x => new { x.StudentId, x.SkillId }); //Fluent API
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
