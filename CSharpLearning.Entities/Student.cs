@@ -11,6 +11,7 @@ namespace CSharpLearning.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Address PermanentAddress { get; set; }
         public ICollection<StudentSkills> StudentSkills { get; set; } = new List<StudentSkills>();
     }
 }

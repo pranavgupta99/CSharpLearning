@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CSharpLearning.Entities;
 
 namespace CSharpLearning.UI.ViewModels.StudentViewModels
 {
     public class CreateStudentViewModel
     {
         public string StudentName { get; set; }
+        public Address PhysicalAddress { get; set; }
         public List<CheckBoxTable> SkillsList { get; set; } = new List<CheckBoxTable>();
     }
     public class CheckBoxTable

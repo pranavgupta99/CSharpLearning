@@ -31,7 +31,7 @@ namespace CSharpLearning.Repositories.Implementations
 
         public async Task<Student> GetById(int id)
         {
-            return await _context.Students.Include(a=>a.StudentSkills).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Students.Include(b=>b.PermanentAddress).Include(a=>a.StudentSkills).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task RemoveData(Student student)

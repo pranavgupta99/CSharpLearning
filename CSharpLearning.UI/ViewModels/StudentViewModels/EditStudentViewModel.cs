@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpLearning.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace CSharpLearning.UI.ViewModels.StudentViewModels
     {
         public int Id { get; set; }
         public string StudentName { get; set; }
+        public Address PhysicalAddress { get; set; }
         public List<CheckBoxTable> SkillsList { get; set; } = new List<CheckBoxTable>();
     }
 }

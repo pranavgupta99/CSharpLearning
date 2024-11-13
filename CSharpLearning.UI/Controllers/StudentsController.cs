@@ -44,7 +44,8 @@ namespace CSharpLearning.UI.Controllers
         {
             var student = new Student
             {
-                Name = vm.StudentName
+                Name = vm.StudentName,
+                PermanentAddress = vm.PhysicalAddress
             };
             var selectedSkillIds = vm.SkillsList.Where(x => x.IsChecked == true)
                 .Select(y => y.SkillId).ToList();
@@ -64,6 +65,8 @@ namespace CSharpLearning.UI.Controllers
         {
             EditStudentViewModel vm = new EditStudentViewModel();
             var student = await _studentRepo.GetById(id);
+            vm.StudentName = student.Name;
+            vm.PhysicalAddress = student.PermanentAddress;
             var existtingSkillIds = student.StudentSkills.Select(x => x.SkillId).ToList();
 
             var skills = await _skillRepo.GetAll();
@@ -77,6 +80,42 @@ namespace CSharpLearning.UI.Controllers
                 });
             }
             return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditStudentViewModel vm)
+        {
+            var student = await _studentRepo.GetById(vm.Id);
+            var existtingSkillIds = student.StudentSkills.Select(x => x.SkillId).ToList();
+            student.Name = vm.StudentName;
+            student.PermanentAddress = vm.PhysicalAddress;
+            var selectedSkillIds = vm.SkillsList.Where(x => x.IsChecked == true)
+                .Select(y => y.SkillId).ToList();
+            
+            var toRemove = existtingSkillIds.Except(selectedSkillIds).ToList();
+            var toAdd = selectedSkillIds.Except(existtingSkillIds).ToList();
+            foreach (var skillId in toRemove)
+            {
+                var studentSkill = student.StudentSkills.FirstOrDefault(x=>x.SkillId == skillId);
+                student.StudentSkills.Remove(studentSkill);
+            }
+            foreach (var skillId in toAdd)
+            {
+                student.StudentSkills.Add(new StudentSkills
+                {
+                    SkillId = skillId
+                });
+            }
+            await _studentRepo.Edit(student);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var student = await _studentRepo.GetById(id);
+            await _studentRepo.RemoveData(student);
+            return RedirectToAction("Index");
         }
     }
 }
