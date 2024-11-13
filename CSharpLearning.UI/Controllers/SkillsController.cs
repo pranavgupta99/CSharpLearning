@@ -32,6 +32,7 @@ namespace CSharpLearning.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateSkillViewModel vm)
         {
             var skill = new Skill

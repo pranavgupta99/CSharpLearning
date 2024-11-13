@@ -11,7 +11,7 @@ namespace CSharpLearning.UI.ViewModels.StudentViewModels
     public class CheckBoxTable
     {
         public int SkillId { get; set; }
-        public string SkillName { get; set; }
+        public string SkillName { get; set; } = "Default";
         public bool IsChecked { get; set; }
     }
 }
