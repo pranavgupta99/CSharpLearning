@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CSharpLearning.UI.ViewModels.SkillViewModels.SkillViewModel>
+﻿@model CSharpLearning.UI.ViewModels.SkillViewModels.PageSkillViewModel
     <h1>Skills</h1>
 <p>
     <a asp-action="Create" class="btn btn-info">Create New</a>
@@ -7,16 +7,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Skills) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -33,3 +33,9 @@
 }
     </tbody>
 </table>
+@{
+    var previous = Model.PageInfo.HasPrevious ? "" : "disabled";
+    var next = Model.PageInfo.HasNext ? "" : "disabled";
+}
+<a class =" btn btn-info @previous" asp-route-pageNumber ="@(Model.PageInfo.PageNumber-1) ">Pre</a>
+<a class =" btn btn-info @next" asp-route-pageNumber ="@(Model.PageInfo.PageNumber +1)">Next</a>

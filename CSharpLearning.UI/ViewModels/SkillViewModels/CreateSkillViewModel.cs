@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpLearning.UI.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace CSharpLearning.UI.ViewModels.SkillViewModels
 {
     public class CreateSkillViewModel
     {
+        [UpperCase]
         public string Title { get; set; }
     }
 }
