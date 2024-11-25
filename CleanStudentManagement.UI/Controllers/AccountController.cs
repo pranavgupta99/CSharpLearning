@@ -44,7 +44,7 @@ namespace CleanStudentManagement.UI.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Students");
+                return RedirectToAction("Profile", "Students");
             }
         }
     }

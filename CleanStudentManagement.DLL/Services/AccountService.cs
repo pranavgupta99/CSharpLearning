@@ -74,13 +74,28 @@ namespace CleanStudentManagement.DLL.Services
 
         public LoginViewModel Login(LoginViewModel loginViewModel)
         {
-            var user = _unitOfWork.GenericRepository<Users>().GetAll().
-                FirstOrDefault(a => a.UserName == loginViewModel.UserName.Trim() &&
-                a.Password == loginViewModel.Password && a.Role == loginViewModel.Role);
-            if (user != null)
+            if (loginViewModel.Role == (int)EnumRoles.Teacher || loginViewModel.Role == (int)EnumRoles.Admin)
             {
-                loginViewModel.Id = user.Id;
-                return loginViewModel;
+                var user = _unitOfWork.GenericRepository<Users>().GetAll().
+                    FirstOrDefault(a => a.UserName == loginViewModel.UserName.Trim() &&
+                    a.Password == loginViewModel.Password && a.Role == loginViewModel.Role);
+                if (user != null)
+                {
+                    loginViewModel.Id = user.Id;
+                    return loginViewModel;
+                }
+            }
+            else
+            {
+                var user = _unitOfWork.GenericRepository<Student>().GetAll().
+                    FirstOrDefault(a => a.UserName == loginViewModel.UserName.Trim() &&
+                    a.Password == loginViewModel.Password);
+
+                if (user != null)
+                {
+                    loginViewModel.Id = user.Id;
+                    return loginViewModel;
+                }
             }
             return null;
 
