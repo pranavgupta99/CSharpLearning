@@ -56,6 +56,14 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
+        public IEnumerable<ExamViewModel> GetAllExams()
+        {
+            List<ExamViewModel> examList = new List<ExamViewModel> ();
+            var exams = _unitOfWork.GenericRepository<Exams>().GetAll().ToList();
+            examList = ListInfo(exams);
+            return examList;
+        }
+
         private List<ExamViewModel> ListInfo(List<Exams> examList)
         {
             return examList.Select(x => new ExamViewModel(x)).ToList();

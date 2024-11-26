@@ -11,5 +11,6 @@ namespace CleanStudentManagement.DLL.Services
     {
         PageResult<ExamViewModel> GetAll(int pageNumber, int pageSize);
         void AddExam(CreateExamsViewModel viewModel);
+        IEnumerable<ExamViewModel> GetAllExams();
     }
 }

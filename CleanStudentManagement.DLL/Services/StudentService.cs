@@ -2,6 +2,7 @@
 using CleanStudentManagement.Data.UnitOfWork;
 using CleanStudentManagement.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,6 +47,28 @@ namespace CleanStudentManagement.DLL.Services
             {
                 throw;
             }
+        }
+
+        public bool SetExamResult(AttendExamViewModel viewModel)
+        {
+            try
+            {
+                foreach (var items in viewModel.QnAsList)
+                {
+                    ExamResults result = new ExamResults();
+                    result.StudentId = viewModel.StudentId;
+                    result.ExamId = items.ExamsId;
+                    result.QnAsId = items.Id;
+                    result.Answer = items.Answer;
+                    _unitOfWork.GenericRepository<ExamResults>().Add(result);
+                    _unitOfWork.Save();
+                    return true;
+                }
+            }
+            catch (Exception ex) { 
+                throw;
+            }
+            return false;
         }
 
         public bool SetGroupIdToStudent(GroupStudentViewModel viewModel)
