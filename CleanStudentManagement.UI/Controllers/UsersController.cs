@@ -14,7 +14,7 @@ namespace CleanStudentManagement.UI.Controllers
             _accountService = accountService;
         }
 
-        public IActionResult Index(int pageNumber, int pageSize)
+        public IActionResult Index(int pageNumber=1, int pageSize=10)
         {
             return View(_accountService.GetAllTeacher(pageNumber, pageSize));
         }
