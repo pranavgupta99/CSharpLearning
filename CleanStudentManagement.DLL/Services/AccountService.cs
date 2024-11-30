@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CleanStudentManagement.DLL.Services
 {
-    internal class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private IUnitOfWork _unitOfWork;
 

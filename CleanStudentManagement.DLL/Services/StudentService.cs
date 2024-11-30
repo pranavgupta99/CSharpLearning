@@ -49,6 +49,11 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
+        public IEnumerable<ResultViewModel> GetExamResult(int studentId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool SetExamResult(AttendExamViewModel viewModel)
         {
             try
@@ -58,7 +63,7 @@ namespace CleanStudentManagement.DLL.Services
                     ExamResults result = new ExamResults();
                     result.StudentId = viewModel.StudentId;
                     result.ExamId = items.ExamsId;
-                    result.QnAsId = items.Id;
+                    //result.QnAsId = items.Id;
                     result.Answer = items.Answer;
                     _unitOfWork.GenericRepository<ExamResults>().Add(result);
                     _unitOfWork.Save();

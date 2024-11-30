@@ -11,6 +11,7 @@ namespace CleanStudentManagement.Data.Entities
         public int Id { get; set; }
         public string QuestionTitle { get; set; }
         public int ExamsId { get; set; }
+        public virtual Exams Exams { get; set; }
         public int Answer { get; set; }
         public string Option1 { get; set; }
         public string Option2 { get; set; }

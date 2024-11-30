@@ -79,5 +79,10 @@ namespace CleanStudentManagement.UI.Controllers
             bool result = _studentService.SetExamResult(viewModel);
             return RedirectToAction("");
         }
+        /*public IActionResult Result(int studentId)
+        {
+            var model = _studentService.GetExamResult(studentId);
+            return View(model);
+        }*/
     }
 }
