@@ -1,4 +1,4 @@
-﻿@using CleanStudentManagement.Models
+﻿@using CleanStudentManagement.Models;
 @model CleanStudentManagement.Models.LoginViewModel
 
 @{
@@ -10,9 +10,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form aspa-action="Login">
+        <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control" />
@@ -25,8 +25,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label"></label>
-                <select asp-for="Role" class="form-control" asp-items="@Html.GetEnumSelectList<EnumRoles>()" >
-                    </select>
+                <select asp-for="Role" class="form-control" asp-items="@Html.GetEnumSelectList<EnumRoles>()">
+                </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,5 +41,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

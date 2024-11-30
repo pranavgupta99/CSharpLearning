@@ -1,0 +1,17 @@
+﻿@using CleanStudentManagement.Models
+@using Newtonsoft.Json;
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("loginDetails") != null)
+{
+    var sessionObj = HttpContextAccessor.HttpContext.Session.GetString("loginDetails");
+    var loginDetails = JsonConvert.DeserializeObject<LoginViewModel>(sessionObj);
+    <span style="margin-right:10px">@loginDetails.UserName</span>
+    <a asp-action="Logout" asp-controller="Accounts">Logout</a>
+}
+else
+{
+    <a class="btn btn-info" asp-action="Login" asp-controller="Accounts">Login</a>
+}
+
