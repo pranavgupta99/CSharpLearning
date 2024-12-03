@@ -102,9 +102,70 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
+        PageResult<StudentViewModel> IStudentService.GetAllStudents(int pageNumber, int PageSize)
+        {
+            try
+            {
+                int excludeRecord = (PageSize * pageNumber) - PageSize;
+                List<StudentViewModel> studentViewModel = new List<StudentViewModel>();
+                var studentList = _unitOfWork.GenericRepository<Student>()
+                    .GetAll()
+                    .Skip(excludeRecord).Take(PageSize).ToList();
+                studentViewModel = ConvertToStudentVM(studentList);
+                var result = new PageResult<StudentViewModel>
+                {
+                    Data = studentViewModel,
+                    TotalItems = _unitOfWork.GenericRepository<Student>()
+                    .GetAll().Count(),
+                    PageNumber = pageNumber,
+                    PageSize = PageSize
+                };
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        private List<StudentViewModel> ConvertToStudentVM(List<Student> studentList)
+        {
+            return studentList.Select(x => new StudentViewModel(x)).ToList();
+        }
+
         private List<StudentsViewModel> ListInfo(List<Student> studentList)
         {
             return studentList.Select(x => new StudentsViewModel(x)).ToList();
+        }
+
+        public StudentProfileViewModel GetStudentById(int studentId)
+        {
+            var student = _unitOfWork.GenericRepository<Student>().GetById(studentId);
+            var studentProfile = new StudentProfileViewModel(student);
+            return studentProfile;
+        }
+
+        public void UpdateProfile(StudentProfileViewModel studentProfile)
+        {
+            try
+            {
+                var student = _unitOfWork.GenericRepository<Student>().GetById(studentProfile.Id);
+                if (student != null)
+                {
+                    student.Name = studentProfile.Name;
+                    student.Contact = studentProfile.Contact;
+                    student.ProfilePicture = studentProfile.ProfilePicture != null ? studentProfile.ProfilePicture : student.ProfilePicture;
+                    student.CVFileName = studentProfile.CVFileName != null ? studentProfile.CVFileName : student.CVFileName;
+
+
+                    _unitOfWork.GenericRepository<Student>().Add(student);
+                    _unitOfWork.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

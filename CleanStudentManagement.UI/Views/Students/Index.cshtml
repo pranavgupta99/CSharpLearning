@@ -1,0 +1,42 @@
+﻿@model PagedResult<CleanStudentManagement.Models.StudentViewModel>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Student Name
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                Contact
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact)
+                </td>
+                <td>
+                    @Html.ActionLink("Result", "Result", new { id = item.StudentId }) |
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

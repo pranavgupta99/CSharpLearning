@@ -18,4 +18,8 @@
     <ProjectReference Include="..\CleanStudentManagement.Models\CleanStudentManagement.Models.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
 </Project>

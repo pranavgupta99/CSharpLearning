@@ -1,8 +1,10 @@
 ﻿using AspNetCoreGeneratedDocument;
 using CleanStudentManagement.DLL.Services;
 using CleanStudentManagement.Models;
+using CSharpLearning.ConcertBooking.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.Json.Nodes;
 
 namespace CleanStudentManagement.UI.Controllers
 {
@@ -11,17 +13,49 @@ namespace CleanStudentManagement.UI.Controllers
         private IStudentService _studentService;
         private IExamService _examService;
         private IQnAsService _qnAsService;
+        private string containerName = "StudentImage";
+        private string cvContainerName = "StudentCV";
+        private IUtilityService _utilityService;
 
-        public StudentsController(IStudentService studentService, IExamService examService, IQnAsService qnAsService)
+        public StudentsController(IStudentService studentService, IExamService examService, IQnAsService qnAsService, IUtilityService utilityService)
         {
             _studentService = studentService;
             _examService = examService;
             _qnAsService = qnAsService;
+            _utilityService = utilityService;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var sessionObj = HttpContext.Session.GetString("loginDetails");
+            if(sessionObj!= null)
+            {
+                var loginViewModel = JsonConvert.DeserializeObject<LoginViewModel>(sessionObj);
+                var studentDetails = _studentService.GetStudentById(loginViewModel.Id);
+                return View(studentDetails);
+            }
+            return RedirectToAction("Login", "Accounts");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(StudentProfileViewModel vm)
+        {
+            if (vm.ProfilePictureUrl != null)
+            {
+                vm.ProfilePicture = await _utilityService.SaveImage(containerName, vm.ProfilePictureUrl);
+            }
+            if (vm.CvFileUrl != null) 
+            {
+                vm.CVFileName = await _utilityService.SaveImage(cvContainerName, vm.CvFileUrl);   
+            }
+            _studentService.UpdateProfile(vm);  
             return View();
         }
 
@@ -35,10 +69,9 @@ namespace CleanStudentManagement.UI.Controllers
             }
             return View(vm);
         }
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 10)
         {
-            return View();
-            //return View(_studentService.GetAllStudents(pageNumber, pageSize));
+            return View(_studentService.GetAllStudents(pageNumber, pageSize));
         }
         [HttpGet]
         public IActionResult AttendExam()

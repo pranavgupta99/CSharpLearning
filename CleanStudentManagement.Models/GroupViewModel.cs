@@ -13,6 +13,11 @@ namespace CleanStudentManagement.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public GroupViewModel() 
+        {
+                
+        }
+
         public GroupViewModel(Groups groups)
         {
             Id = groups.Id;

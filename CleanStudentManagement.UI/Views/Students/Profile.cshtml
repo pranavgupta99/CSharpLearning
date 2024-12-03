@@ -1,0 +1,64 @@
+﻿@model CleanStudentManagement.Models.StudentProfileViewModel
+
+<h4>StudentProfile</h4>
+<hr />
+
+<form asp-action="Profile" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input type="hidden" asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input readonly asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact" class="control-label"></label>
+                <input asp-for="Contact" class="form-control" />
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+
+
+        </div>
+        <div class="col-md-6">
+            <div>
+                <img width="120" height="150" src="@(Model.ProfilePicture==null?"/StudentImage/demo.jpg":Model.ProfilePicture)" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfilePictureUrl" class="control-label"></label>
+                <input asp-for="ProfilePictureUrl" class="form-control" />
+                <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div>
+            @if (Model.CVFileName != null)
+            {
+                <a href="@Model.CVFileName">Download CV</a>
+            }
+
+        </div>
+        <div class="form-group">
+            <label asp-for="CvFileUrl" class="control-label"></label>
+            <input asp-for="CvFileUrl" class="form-control" />
+            <span asp-validation-for="CvFileUrl" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
