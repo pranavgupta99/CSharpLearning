@@ -1,5 +1,5 @@
 ﻿using AspNetCoreGeneratedDocument;
-using CleanStudentManagement.DLL.Services;
+using CleanStudentManagement.BLL.Services;
 using CleanStudentManagement.Models;
 using CSharpLearning.ConcertBooking.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -55,8 +55,8 @@ namespace CleanStudentManagement.UI.Controllers
             {
                 vm.CVFileName = await _utilityService.SaveImage(cvContainerName, vm.CvFileUrl);   
             }
-            _studentService.UpdateProfile(vm);  
-            return View();
+            _studentService.UpdateProfile(vm);
+            return RedirectToAction("profile");
         }
 
         [HttpPost]
@@ -94,6 +94,7 @@ namespace CleanStudentManagement.UI.Controllers
                     {
                         model.QnAsList = _qnAsService.GetAllByExamId(todayExam.Id).ToList();
                         model.ExamName = todayExam.Title;
+                        model.Message = "";
                         return View(model);
                     }
                     else
@@ -112,10 +113,16 @@ namespace CleanStudentManagement.UI.Controllers
             bool result = _studentService.SetExamResult(viewModel);
             return RedirectToAction("");
         }
-        /*public IActionResult Result(int studentId)
+        public IActionResult Result()
         {
-            var model = _studentService.GetExamResult(studentId);
-            return View(model);
-        }*/
+            var sessionObj = HttpContext.Session.GetString("loginDetails");
+            if (sessionObj != null)
+            {
+                var loginViewModel = JsonConvert.DeserializeObject<LoginViewModel>(sessionObj);
+                var model = _studentService.GetExamResults(Convert.ToInt32(loginViewModel.Id));
+                return View(model);
+            }
+            return RedirectToAction("Login", "Accounts");
+        }
     }
 }

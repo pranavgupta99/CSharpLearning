@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public interface IExamService
     {
-        PageResult<ExamViewModel> GetAll(int pageNumber, int pageSize);
+        PagedResult<ExamViewModel> GetAll(int pageNumber, int pageSize);
         void AddExam(CreateExamsViewModel viewModel);
         IEnumerable<ExamViewModel> GetAllExams();
     }

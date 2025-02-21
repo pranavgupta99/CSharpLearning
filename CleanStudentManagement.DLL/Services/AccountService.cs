@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public class AccountService : IAccountService
     {
@@ -41,17 +41,18 @@ namespace CleanStudentManagement.DLL.Services
             return true;
         }
 
-        public PageResult<TeacherViewModel> GetAllTeacher(int pageNumber, int PageSize)
+        public PagedResult<TeacherViewModel> GetAllTeacher(int pageNumber, int PageSize)
         {
             try
             {
-                int excludeRecord = (PageSize * pageNumber) - PageSize;
+                int excludeRecords = (PageSize * pageNumber) - PageSize;
                 List<TeacherViewModel> teacherViewModels = new List<TeacherViewModel>();
                 var usersList = _unitOfWork.GenericRepository<Users>()
-                    .GetAll().Where(x=>x.Role == (int)EnumRoles.Teacher)
-                    .Skip(excludeRecord).Take(PageSize).ToList();
+                    .GetAll().Where(x => x.Role == (int)EnumRoles.Teacher)
+                    .Skip(excludeRecords).Take(PageSize).ToList();
+
                 teacherViewModels = ListInfo(usersList);
-                var result = new PageResult<TeacherViewModel>
+                var result = new PagedResult<TeacherViewModel>
                 {
                     Data = teacherViewModels,
                     TotalItems = _unitOfWork.GenericRepository<Users>()
@@ -88,8 +89,8 @@ namespace CleanStudentManagement.DLL.Services
             else
             {
                 var user = _unitOfWork.GenericRepository<Student>().GetAll().
-                    FirstOrDefault(a => a.UserName == loginViewModel.UserName.Trim() &&
-                    a.Password == loginViewModel.Password);
+                            FirstOrDefault(a => a.UserName == loginViewModel.UserName.Trim() &&
+                            a.Password == loginViewModel.Password);
 
                 if (user != null)
                 {
@@ -98,7 +99,6 @@ namespace CleanStudentManagement.DLL.Services
                 }
             }
             return null;
-
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public interface IGroupService
     {
-        PageResult<GroupViewModel> GetAll(int pageNUmber, int PageSize);
+        PagedResult<GroupViewModel> GetAll(int pageNUmber, int pageSize);
         IEnumerable<GroupViewModel> GetAllGroups();
         GroupViewModel GetGroup(int id);
         GroupViewModel Addgroup(GroupViewModel group);

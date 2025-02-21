@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public class GroupService : IGroupService
     {
@@ -34,23 +34,23 @@ namespace CleanStudentManagement.DLL.Services
             return groupVM;
         }
 
-        public PageResult<GroupViewModel> GetAll(int pageNumber, int PageSize)
+        public PagedResult<GroupViewModel> GetAll(int pageNumber, int pageSize)
         {
             try
             {
-                int excludeRecord = (PageSize * pageNumber) - PageSize;
+                int excludeRecords = (pageSize * pageNumber) - pageSize;
                 List<GroupViewModel> groupViewModel = new List<GroupViewModel>();
                 var groupList = _unitOfWork.GenericRepository<Groups>()
                     .GetAll()
-                    .Skip(excludeRecord).Take(PageSize).ToList();
+                    .Skip(excludeRecords).Take(pageSize).ToList();
                 groupViewModel = ListInfo(groupList);
-                var result = new PageResult<GroupViewModel>
+                var result = new PagedResult<GroupViewModel>
                 {
                     Data = groupViewModel,
                     TotalItems = _unitOfWork.GenericRepository<Groups>()
                     .GetAll().Count(),
                     PageNumber = pageNumber,
-                    PageSize = PageSize
+                    PageSize = pageSize
                 };
                 return result;
             }
@@ -70,7 +70,8 @@ namespace CleanStudentManagement.DLL.Services
             {
                 List<GroupViewModel> groupViewModel = new List<GroupViewModel>();
                 var groupList = _unitOfWork.GenericRepository<Groups>()
-                    .GetAll().ToList();
+                    .GetAll()
+                    .ToList();
                 groupViewModel = ListInfo(groupList);
                 return groupViewModel;
             }

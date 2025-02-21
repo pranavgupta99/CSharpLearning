@@ -18,6 +18,10 @@ namespace CleanStudentManagement.Models
         public IFormFile CvFileUrl { get; set; }
         public string? ProfilePicture { get; set; }
         public IFormFile ProfilePictureUrl { get; set; }
+        public StudentProfileViewModel()
+        {
+
+        }
         public StudentProfileViewModel(Student student)
         {
             Id = student.Id;

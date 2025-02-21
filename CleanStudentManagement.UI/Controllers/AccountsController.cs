@@ -1,4 +1,4 @@
-﻿using CleanStudentManagement.DLL.Services;
+﻿using CleanStudentManagement.BLL.Services;
 using CleanStudentManagement.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -34,21 +34,24 @@ namespace CleanStudentManagement.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            LoginViewModel vm = _accountService.Login(model);
-            if(vm != null)
+            if (ModelState.IsValid)
             {
-                string sessionObj = JsonSerializer.Serialize(vm);
-                HttpContext.Session.SetString("loginDetails", sessionObj);
-                var claims = new List<Claim>()
+                LoginViewModel vm = _accountService.Login(model);
+                if (vm != null)
                 {
-                    new Claim(ClaimTypes.Name,model.UserName)
-                };
-                var claimsIdentity = new ClaimsIdentity(claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme
-                    , new ClaimsPrincipal(claimsIdentity));
+                    string sessionObj = JsonSerializer.Serialize(vm);
+                    HttpContext.Session.SetString("loginDetails", sessionObj);
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name,model.UserName)
+                    };
+                    var claimsIdentity = new ClaimsIdentity(claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme
+                        , new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToUser(vm);
+                    return RedirectToUser(vm);
+                }
             }
             return View(model);
         }

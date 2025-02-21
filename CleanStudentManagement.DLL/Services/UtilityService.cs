@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace CSharpLearning.ConcertBooking.Repositories
 {
-    public class UtilitiyService : IUtilityService
+    public class UtilityService : IUtilityService
     {
         private IWebHostEnvironment _env;
         private IHttpContextAccessor _contextAccessor;
 
-        public UtilitiyService(IWebHostEnvironment env, IHttpContextAccessor contextAccessor)
+        public UtilityService(IWebHostEnvironment env, IHttpContextAccessor contextAccessor)
         {
             _env = env;
             _contextAccessor = contextAccessor;
@@ -17,12 +17,12 @@ namespace CSharpLearning.ConcertBooking.Repositories
 
         public Task DeleteImage(string ContainerName, string dbPath)
         {
-            if (string.IsNullOrEmpty(ContainerName))
+            if (string.IsNullOrEmpty(dbPath))
             {
                 return Task.CompletedTask;
             }
-            var fileName = Path.GetFileName(dbPath);
-            var completePath = Path.Combine(_env.WebRootPath, ContainerName, fileName);
+            var filename = Path.GetFileName(dbPath);
+            var completePath = Path.Combine(_env.WebRootPath, ContainerName, filename);
             if (File.Exists(completePath))
             {
                 File.Delete(completePath);

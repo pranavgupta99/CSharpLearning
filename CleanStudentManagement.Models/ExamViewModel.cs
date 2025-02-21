@@ -14,7 +14,7 @@ namespace CleanStudentManagement.Models
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public int Time { get; set; }
-        public int GroupsId { get; set; }
+        public string GroupName { get; set; }
         public ExamViewModel(Exams model)
         {
             Id = model.Id;
@@ -22,7 +22,7 @@ namespace CleanStudentManagement.Models
             Description = model.Description;
             StartDate = model.StartDate;
             Time = model.Time;
-            GroupsId = model.GroupsId;
+            GroupName = model.Groups.Name;
         }
     }
 }

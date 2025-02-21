@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public class StudentService : IStudentService
     {
@@ -49,9 +49,34 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
-        public IEnumerable<ResultViewModel> GetExamResult(int studentId)
+        public IEnumerable<ResultViewModel> GetExamResults(int studentId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var examResults = _unitOfWork.GenericRepository<ExamResults>().GetAll().Where(x => x.StudentId == studentId);
+                var students = _unitOfWork.GenericRepository<Student>().GetAll();
+                var exams = _unitOfWork.GenericRepository<Exams>().GetAll();
+                var qnas = _unitOfWork.GenericRepository<QnAs>().GetAll();
+
+                var requiredData = examResults.Join(students, er => er.StudentId, s => s.Id, (er, st) => new { er, st })
+                    .Join(exams, erj => erj.er.ExamId, ex => ex.Id, (erj, ex) => new { erj, ex })
+                    .Join(qnas, exj => exj.erj.er.QnAsId, q => q.Id, (exj, q) =>
+                    new ResultViewModel()
+                    {
+                        StudentId = studentId,
+                        ExamName = exj.ex.Title,
+                        TotalQuestion = examResults.Count(a => a.StudentId == studentId && a.ExamId == exj.ex.Id),
+                        CorrectAnswer = examResults.Count(a => a.StudentId == studentId && a.ExamId == exj.ex.Id
+                         && a.Answer == q.Answer),
+                        WrongAnswer = examResults.Count(a => a.StudentId == studentId && a.ExamId == exj.ex.Id
+                         && a.Answer != q.Answer)
+                    });
+                return requiredData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public bool SetExamResult(AttendExamViewModel viewModel)
@@ -63,8 +88,8 @@ namespace CleanStudentManagement.DLL.Services
                     ExamResults result = new ExamResults();
                     result.StudentId = viewModel.StudentId;
                     result.ExamId = items.ExamsId;
-                    //result.QnAsId = items.Id;
-                    result.Answer = items.Answer;
+                    result.QnAsId = items.Id;
+                    result.Answer = items.SelectedAnswer;
                     _unitOfWork.GenericRepository<ExamResults>().Add(result);
                     _unitOfWork.Save();
                     return true;
@@ -85,12 +110,12 @@ namespace CleanStudentManagement.DLL.Services
                     var student = _unitOfWork.GenericRepository<Student>().GetById(item.Id);
                     if(item.IsChecked)
                     {
-                        student.GroupId = viewModel.GroupId;
+                        student.GroupsId = viewModel.GroupId;
                         _unitOfWork.GenericRepository<Student>().Update(student);
                     }
                     else
                     {
-                        student.GroupId = null;
+                        student.GroupsId = null;
                     }
                 }
                 _unitOfWork.Save();
@@ -102,23 +127,24 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
-        PageResult<StudentViewModel> IStudentService.GetAllStudents(int pageNumber, int PageSize)
+        public PagedResult<StudentViewModel>GetAllStudents(int pageNumber, int pageSize)
         {
             try
             {
-                int excludeRecord = (PageSize * pageNumber) - PageSize;
+                int excludeRecords = (pageSize * pageNumber) - pageSize;
                 List<StudentViewModel> studentViewModel = new List<StudentViewModel>();
                 var studentList = _unitOfWork.GenericRepository<Student>()
                     .GetAll()
-                    .Skip(excludeRecord).Take(PageSize).ToList();
+                    .Skip(excludeRecords).Take(pageSize).ToList();
+
                 studentViewModel = ConvertToStudentVM(studentList);
-                var result = new PageResult<StudentViewModel>
+                var result = new PagedResult<StudentViewModel>
                 {
                     Data = studentViewModel,
                     TotalItems = _unitOfWork.GenericRepository<Student>()
                     .GetAll().Count(),
                     PageNumber = pageNumber,
-                    PageSize = PageSize
+                    PageSize = pageSize
                 };
                 return result;
             }
@@ -126,7 +152,6 @@ namespace CleanStudentManagement.DLL.Services
             {
                 throw;
             }
-
         }
 
         private List<StudentViewModel> ConvertToStudentVM(List<Student> studentList)
@@ -157,14 +182,13 @@ namespace CleanStudentManagement.DLL.Services
                     student.Contact = studentProfile.Contact;
                     student.ProfilePicture = studentProfile.ProfilePicture != null ? studentProfile.ProfilePicture : student.ProfilePicture;
                     student.CVFileName = studentProfile.CVFileName != null ? studentProfile.CVFileName : student.CVFileName;
-
-
-                    _unitOfWork.GenericRepository<Student>().Add(student);
+                    _unitOfWork.GenericRepository<Student>().Update(student);
                     _unitOfWork.Save();
                 }
             }
             catch (Exception ex)
             {
+                throw;
             }
         }
     }

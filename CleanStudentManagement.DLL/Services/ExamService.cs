@@ -2,7 +2,7 @@
 using CleanStudentManagement.Data.UnitOfWork;
 using CleanStudentManagement.Models;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public class ExamService : IExamService
     {
@@ -27,7 +27,7 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
-        public PageResult<ExamViewModel> GetAll(int pageNumber, int pageSize)
+        public PagedResult<ExamViewModel> GetAll(int pageNumber, int pageSize)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace CleanStudentManagement.DLL.Services
                     .Skip(excludeRecords).Take(pageSize).ToList();
 
                 examViewModel = ListInfo(examList);
-                var result = new PageResult<ExamViewModel>
+                var result = new PagedResult<ExamViewModel>
                 {
                     Data = examViewModel,
                     TotalItems = _unitOfWork.GenericRepository<Exams>()

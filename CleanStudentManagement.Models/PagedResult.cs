@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CleanStudentManagement.Models
 {
-    public class PageResult<T> where T : class
+    public class PagedResult<T> where T : class
     {
-        public PageResult()
+        public PagedResult()
         {
             
         }

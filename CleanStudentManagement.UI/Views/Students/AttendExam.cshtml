@@ -1,0 +1,36 @@
+﻿@using CleanStudentManagement.Models
+@model AttendExamViewModel
+
+<h1>@Model.ExamName</h1>
+
+@if (Model.Message == "")
+{
+    <form asp-action="AttendExam" asp-controller="students" method="post">
+        <input type="hidden" asp-for="StudentId" />
+        <ul>
+            @for (int i = 0; i < Model.QnAsList.Count(); i++)
+            {
+                <input type="hidden" asp-for="@Model.QnAsList[i].Id" />
+                <input type="hidden" asp-for="@Model.QnAsList[i].ExamsId" />
+                <li>
+                    <label for="@Model.QnAsList[i].QuestionTitle">@Model.QnAsList[i].QuestionTitle</label>
+
+                </li>
+                <li style="list-style:none">
+                    <select asp-for="@Model.QnAsList[i].SelectedAnswer" class="form-control">
+                        <option selected disabled>Choose Answer</option>
+                        <option value="1">@Model.QnAsList[i].Option1</option>
+                        <option value="2">@Model.QnAsList[i].Option2</option>
+                        <option value="3">@Model.QnAsList[i].Option3</option>
+                        <option value="4">@Model.QnAsList[i].Option4</option>
+                    </select>
+                </li>
+            }
+        </ul>
+        <button type="submit">Submit</button>
+    </form>
+}
+else
+{
+    <h1 class="alert alert-danger">No Exam</h1>
+}

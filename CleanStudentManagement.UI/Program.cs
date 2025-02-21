@@ -1,8 +1,9 @@
 using CleanStudentManagement.Data;
 using CleanStudentManagement.Data.UnitOfWork;
-using CleanStudentManagement.DLL.Services;
+using CleanStudentManagement.BLL.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using CSharpLearning.ConcertBooking.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IQnAsService, QnAsService>();
+builder.Services.AddScoped<IUtilityService, UtilityService>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

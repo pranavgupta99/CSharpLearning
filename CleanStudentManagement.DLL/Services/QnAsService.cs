@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public class QnAsService : IQnAsService
     {
         private IUnitOfWork _unitOfWork;
+
         public QnAsService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -31,23 +32,23 @@ namespace CleanStudentManagement.DLL.Services
             }
         }
 
-        public PageResult<QnAsViewModel> GetAll(int pageNumber, int PageSize)
+        public PagedResult<QnAsViewModel> GetAll(int pageNumber, int pageSize)
         {
             try
             {
-                int excludeRecord = (PageSize * pageNumber) - PageSize;
+                int excludeRecords = (pageSize * pageNumber) - pageSize;
                 List<QnAsViewModel> qnAsViewModel = new List<QnAsViewModel>();
                 var groupList = _unitOfWork.GenericRepository<QnAs>()
                     .GetAll()
-                    .Skip(excludeRecord).Take(PageSize).ToList();
+                    .Skip(excludeRecords).Take(pageSize).ToList();
                 qnAsViewModel = ListInfo(groupList);
-                var result = new PageResult<QnAsViewModel>
+                var result = new PagedResult<QnAsViewModel>
                 {
                     Data = qnAsViewModel,
                     TotalItems = _unitOfWork.GenericRepository<QnAs>()
                     .GetAll().Count(),
                     PageNumber = pageNumber,
-                    PageSize = PageSize
+                    PageSize = pageSize
                 };
                 return result;
             }
@@ -60,15 +61,15 @@ namespace CleanStudentManagement.DLL.Services
         public IEnumerable<QnAsViewModel> GetAllByExamId(int examId)
         {
             var QnAs = _unitOfWork.GenericRepository<QnAs>().GetAll()
-                .Where(x=>x.ExamsId == examId).ToList();
+                .Where(x => x.ExamsId == examId).ToList();
             return ListInfo(QnAs);
         }
 
         public bool IsAttendExam(int examId, int studentId)
         {
             var result = _unitOfWork.GenericRepository<ExamResults>().GetAll()
-                .Where(x=>x.ExamId == examId && x.StudentId == studentId);
-            return  result == null? false: true;
+                .Any(x => x.ExamId == examId && x.StudentId == studentId);
+            return  result == false? false: true;
         }
 
         private List<QnAsViewModel> ListInfo(List<QnAs> modelList)

@@ -17,5 +17,6 @@ namespace CleanStudentManagement.Data.Entities
         public string Option2 { get; set; }
         public string Option3 { get; set; }
         public string Option4 { get; set; }
+        public ICollection<ExamResults> ExamResults { get; set; } = new List<ExamResults>();
     }
 }

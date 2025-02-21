@@ -24,6 +24,7 @@ namespace CleanStudentManagement.Models
             Name = groups.Name;
             Description = groups.Description;
         }
+
         public Groups ConverttoGroup( GroupViewModel groupViewModel)
         {
             return new Groups
@@ -34,5 +35,4 @@ namespace CleanStudentManagement.Models
             };
         }
     }
-
 }

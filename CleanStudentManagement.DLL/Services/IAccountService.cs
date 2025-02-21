@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanStudentManagement.DLL.Services
+namespace CleanStudentManagement.BLL.Services
 {
     public interface IAccountService
     {
         bool AddTeacher(UserViewModel vm);
         LoginViewModel Login(LoginViewModel loginViewModel);
-        PageResult<TeacherViewModel> GetAllTeacher(int pageNumber, int PageSize);
+        PagedResult<TeacherViewModel> GetAllTeacher(int pageNumber, int PageSize);
     }
 }

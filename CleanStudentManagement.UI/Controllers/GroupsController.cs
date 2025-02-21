@@ -1,4 +1,4 @@
-﻿using CleanStudentManagement.DLL.Services;
+﻿using CleanStudentManagement.BLL.Services;
 using CleanStudentManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +45,7 @@ namespace CleanStudentManagement.UI.Controllers
                 {
                     Id = student.Id,
                     Name = student.Name,
-                    IsChecked = false
+                    IsChecked = student.GroupsId == null ? false : true
                 });
             }
             return View(vm);
