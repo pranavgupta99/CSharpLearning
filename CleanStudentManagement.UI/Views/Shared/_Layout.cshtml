@@ -1,9 +1,6 @@
-﻿@using CleanStudentManagement.Models
-@using Newtonsoft.Json
+﻿@using Newtonsoft.Json;
 @inject IHttpContextAccessor HttpContextAccessor
-@{
 
-}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +17,7 @@
         {
             var sessionObj = HttpContextAccessor.HttpContext.Session.GetString("loginDetails");
             var loginDetails = JsonConvert.DeserializeObject<LoginViewModel>(sessionObj);
-            @if(loginDetails.Role==1)
+            @if (loginDetails.Role == 1)
             {
                 <partial name="_adminnav" />
             }

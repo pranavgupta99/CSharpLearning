@@ -13,12 +13,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" asp-controller="students" asp-action="profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" asp-controller="students" asp-action="AttendExam">Attend Exam</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" asp-controller="students" asp-action="Result">Result</a>
+                </li>
+                @*  <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -30,8 +33,8 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Separated link</a>
                     </div>
-                </li>
-            </ul>           
+                </li> *@
+            </ul>
             <partial name="_LoginPartial" />
         </div>
     </div>
