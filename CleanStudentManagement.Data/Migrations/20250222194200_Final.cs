@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CleanStudentManagement.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,7 @@ namespace CleanStudentManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -38,7 +38,7 @@ namespace CleanStudentManagement.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,8 +76,7 @@ namespace CleanStudentManagement.Data.Migrations
                     Contact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CVFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GroupId = table.Column<int>(type: "int", nullable: true),
-                    GroupsId = table.Column<int>(type: "int", nullable: false)
+                    GroupsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,8 +85,7 @@ namespace CleanStudentManagement.Data.Migrations
                         name: "FK_Students_Groups_GroupsId",
                         column: x => x.GroupsId,
                         principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -122,36 +120,45 @@ namespace CleanStudentManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
+                    QnAsId = table.Column<int>(type: "int", nullable: false),
                     ExamId = table.Column<int>(type: "int", nullable: false),
-                    ExamsId = table.Column<int>(type: "int", nullable: false),
                     Answer = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExamResults", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExamResults_Exams_ExamsId",
-                        column: x => x.ExamsId,
+                        name: "FK_ExamResults_Exams",
+                        column: x => x.ExamId,
                         principalTable: "Exams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExamResults_Students_StudentId",
+                        name: "FK_ExamResults_QnAs",
+                        column: x => x.QnAsId,
+                        principalTable: "QnAs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Examresults_Users",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
-                table: "users",
+                table: "Users",
                 columns: new[] { "Id", "Name", "Password", "Role", "UserName" },
                 values: new object[] { 1, "Admin", "admin", 1, "admin" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExamResults_ExamsId",
+                name: "IX_ExamResults_ExamId",
                 table: "ExamResults",
-                column: "ExamsId");
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExamResults_QnAsId",
+                table: "ExamResults",
+                column: "QnAsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExamResults_StudentId",
@@ -181,10 +188,10 @@ namespace CleanStudentManagement.Data.Migrations
                 name: "ExamResults");
 
             migrationBuilder.DropTable(
-                name: "QnAs");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "QnAs");
 
             migrationBuilder.DropTable(
                 name: "Students");

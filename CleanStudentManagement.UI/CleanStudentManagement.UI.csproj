@@ -7,15 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Students\Create.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Students\Create.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CleanStudentManagement.DLL\CleanStudentManagement.DLL.csproj" />
+    <ProjectReference Include="..\CleanStudentManagement.DLL\CleanStudentManagement.BLL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace CleanStudentManagement.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,7 +36,7 @@ namespace CleanStudentManagement.Data.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExamsId")
+                    b.Property<int>("QnAsId")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
@@ -44,7 +44,9 @@ namespace CleanStudentManagement.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExamsId");
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("QnAsId");
 
                     b.HasIndex("StudentId");
 
@@ -159,10 +161,7 @@ namespace CleanStudentManagement.Data.Migrations
                     b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupsId")
+                    b.Property<int?>("GroupsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -212,7 +211,7 @@ namespace CleanStudentManagement.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
@@ -227,19 +226,28 @@ namespace CleanStudentManagement.Data.Migrations
 
             modelBuilder.Entity("CleanStudentManagement.Data.Entities.ExamResults", b =>
                 {
-                    b.HasOne("CleanStudentManagement.Data.Entities.Exams", "Exams")
+                    b.HasOne("CleanStudentManagement.Data.Entities.Exams", "Exam")
                         .WithMany("ExamResults")
-                        .HasForeignKey("ExamsId")
+                        .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_ExamResults_Exams");
+
+                    b.HasOne("CleanStudentManagement.Data.Entities.QnAs", "QnAs")
+                        .WithMany("ExamResults")
+                        .HasForeignKey("QnAsId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ExamResults_QnAs");
 
                     b.HasOne("CleanStudentManagement.Data.Entities.Student", "Student")
                         .WithMany("ExamResults")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Examresults_Users");
 
-                    b.Navigation("Exams");
+                    b.Navigation("Exam");
+
+                    b.Navigation("QnAs");
 
                     b.Navigation("Student");
                 });
@@ -270,9 +278,7 @@ namespace CleanStudentManagement.Data.Migrations
                 {
                     b.HasOne("CleanStudentManagement.Data.Entities.Groups", "Groups")
                         .WithMany("Students")
-                        .HasForeignKey("GroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupsId");
 
                     b.Navigation("Groups");
                 });
@@ -289,6 +295,11 @@ namespace CleanStudentManagement.Data.Migrations
                     b.Navigation("Exams");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("CleanStudentManagement.Data.Entities.QnAs", b =>
+                {
+                    b.Navigation("ExamResults");
                 });
 
             modelBuilder.Entity("CleanStudentManagement.Data.Entities.Student", b =>

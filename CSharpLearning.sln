@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertBooking.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanStudentManagement.Data", "CleanStudentManagement.Data\CleanStudentManagement.Data.csproj", "{BA8DB347-AFDE-4DF2-8A23-7E29DA13A76C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanStudentManagement.DLL", "CleanStudentManagement.DLL\CleanStudentManagement.DLL.csproj", "{517A3B85-1A83-424D-BFED-1FBC300CA6C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanStudentManagement.BLL", "CleanStudentManagement.DLL\CleanStudentManagement.BLL.csproj", "{517A3B85-1A83-424D-BFED-1FBC300CA6C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanStudentManagement.UI", "CleanStudentManagement.UI\CleanStudentManagement.UI.csproj", "{50A77536-BC6B-4A0C-8E27-C5AB4E2E3E85}"
 EndProject
